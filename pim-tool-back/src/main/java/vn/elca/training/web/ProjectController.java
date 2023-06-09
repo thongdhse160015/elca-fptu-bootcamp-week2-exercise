@@ -37,4 +37,14 @@ public class ProjectController extends AbstractApplicationController {
                 .map(mapper::projectToProjectDto)
                 .collect(Collectors.toList());
     }
+
+    @GetMapping("/search/{id}")
+    @ResponseBody
+    public ProjectDto getProjectById(@PathVariable long id) {
+        return projectService.findAll()
+                .stream()
+                .filter(product -> product.getId() == id)
+                .map(mapper::projectToProjectDto)
+                .findFirst().orElseThrow();
+    }
 }
