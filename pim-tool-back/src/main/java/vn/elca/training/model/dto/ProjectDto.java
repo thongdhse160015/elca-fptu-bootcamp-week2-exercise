@@ -34,4 +34,11 @@ public class ProjectDto {
     public void setFinishingDate(LocalDate finishingDate) {
         this.finishingDate = finishingDate;
     }
+
+    @Override
+    public String toString() {
+        return "ProjectDto [id=" + id + ", name=" + name + ", finishingDate=" + finishingDate + "]";
+    }
+
+    
 }

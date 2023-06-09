@@ -1,12 +1,16 @@
 package vn.elca.training.service.impl.dummy;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import vn.elca.training.model.entity.Project;
+import vn.elca.training.model.entity.User;
+import vn.elca.training.repository.ProjectRepository;
+import vn.elca.training.repository.TaskRepository;
+import vn.elca.training.repository.UserRepository;
 import vn.elca.training.service.ProjectService;
+import vn.elca.training.util.MyLogger;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,20 +18,20 @@ import java.util.List;
  *
  */
 @Component
-@Profile("dummy")
+// @Profile("dummy")
 @Qualifier("firstDummyProjectServiceImpl")
 public class FirstDummyProjectServiceImpl extends AbstractDummyProjectService implements ProjectService {
 
+    @Autowired
+    private ProjectRepository projectRepository;
+
     @Override
     public List<Project> findAll() {
-        // throw new UnsupportedOperationException("This is first dummy service");
-        return new ArrayList<>();
+        return projectRepository.findAll();
     }
 
     @Override
     public long count() {
-        // printCurrentActiveProfiles();
-        // throw new UnsupportedOperationException("This is first dummy service");
-        return 0;
+        return projectRepository.count();
     }
 }

@@ -34,4 +34,11 @@ public class UserDto {
     public void setTasks(List<TaskDto> tasks) {
         this.tasks = tasks;
     }
+
+    @Override
+    public String toString() {
+        return "UserDto [username=" + username + "]";
+    }
+
+    
 }
