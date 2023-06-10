@@ -1,16 +1,11 @@
 package vn.elca.training.service.impl.dummy;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import vn.elca.training.model.entity.Project;
-import vn.elca.training.model.entity.User;
 import vn.elca.training.repository.ProjectRepository;
-import vn.elca.training.repository.TaskRepository;
-import vn.elca.training.repository.UserRepository;
 import vn.elca.training.service.ProjectService;
-import vn.elca.training.util.MyLogger;
-
 import java.util.List;
 
 /**
@@ -18,8 +13,7 @@ import java.util.List;
  *
  */
 @Component
-// @Profile("dummy")
-@Qualifier("firstDummyProjectServiceImpl")
+@Profile("dummy")
 public class FirstDummyProjectServiceImpl extends AbstractDummyProjectService implements ProjectService {
 
     @Autowired

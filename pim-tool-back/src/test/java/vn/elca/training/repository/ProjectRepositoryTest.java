@@ -1,8 +1,6 @@
 package vn.elca.training.repository;
 
 import java.time.LocalDate;
-import java.util.Date;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
