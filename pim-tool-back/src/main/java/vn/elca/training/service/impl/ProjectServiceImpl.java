@@ -31,4 +31,9 @@ public class ProjectServiceImpl implements ProjectService {
     public long count() {
         return projectRepository.count();
     }
+
+    @Override
+    public Project findById(Long id) {
+        return projectRepository.findById(id).orElse(null);
+    }
 }

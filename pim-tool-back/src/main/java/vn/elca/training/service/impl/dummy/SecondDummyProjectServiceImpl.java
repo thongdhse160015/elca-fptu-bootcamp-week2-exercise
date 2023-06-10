@@ -25,4 +25,10 @@ public class SecondDummyProjectServiceImpl extends AbstractDummyProjectService i
         printCurrentActiveProfiles();
         throw new UnsupportedOperationException("This is second dummy service");
     }
+
+    @Override
+    public Project findById(Long id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findById'");
+    }
 }
