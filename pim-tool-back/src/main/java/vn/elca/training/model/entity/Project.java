@@ -29,7 +29,7 @@ public class Project {
     @Column
     private String customer;
 
-    @OneToMany(mappedBy = "project", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
     private Set<Task> tasks = new HashSet<>();
 
     public Project() {

@@ -29,7 +29,7 @@ public class User implements Serializable {
     @Column
     private String fullName;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Task> tasks;
 
     public User() {}
