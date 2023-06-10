@@ -31,4 +31,10 @@ public class FirstDummyProjectServiceImpl extends AbstractDummyProjectService im
         throw new UnsupportedOperationException("Unimplemented method 'findById'");
     }
 
+    @Override
+    public Project updateProject(Project project) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'updateProject'");
+    }
+
 }

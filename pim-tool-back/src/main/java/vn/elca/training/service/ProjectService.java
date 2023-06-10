@@ -13,5 +13,7 @@ public interface ProjectService {
 
     Project findById(Long id);
 
+    Project updateProject(Project project);
+
     long count();
 }
