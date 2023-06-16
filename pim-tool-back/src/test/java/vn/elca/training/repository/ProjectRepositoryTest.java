@@ -26,11 +26,13 @@ public class ProjectRepositoryTest {
 
     @Test
     public void testCountAll() {
+        int currentCount = (int) projectRepository.count();
         projectRepository.save(new Project("KSTA", LocalDate.now()));
         projectRepository.save(new Project("LAGAPEO", LocalDate.now()));
         projectRepository.save(new Project("ZHQUEST", LocalDate.now()));
         projectRepository.save(new Project("SECUTIX", LocalDate.now()));
-        Assert.assertEquals(9, projectRepository.count());
+        int newCount = currentCount + 4;
+        Assert.assertEquals(newCount, projectRepository.count());
     }
 
     @Test
