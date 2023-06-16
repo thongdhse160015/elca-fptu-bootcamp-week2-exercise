@@ -7,7 +7,10 @@ import vn.elca.training.model.entity.Project;
 
 /**
  * @author vlp
- *
  */
 public interface ProjectRepository extends JpaRepository<Project, Long>, QuerydslPredicateExecutor<Project> {
+
+    //define new method that find project by name
+    Project findByName(String name);
+
 }

@@ -17,12 +17,24 @@ import vn.elca.training.model.entity.Project;
 import vn.elca.training.model.entity.QProject;
 
 @ContextConfiguration(classes = {ApplicationWebConfig.class})
-@RunWith(value=SpringRunner.class)
+@RunWith(value = SpringRunner.class)
 public class ProjectRepositoryTest {
     @PersistenceContext
     private EntityManager em;
     @Autowired
     private ProjectRepository projectRepository;
+
+    //Test verify the saving of one project via projectRepository
+    @Test
+    public void testSaveOneProject() {
+        final String PROJECT_NAME = "KSTA";
+        projectRepository.save(new Project(PROJECT_NAME, LocalDate.now()));
+        Project project = projectRepository.findByName(PROJECT_NAME);
+        Assert.assertEquals(PROJECT_NAME, project.getName());
+    }
+
+    //TODO : To verify the saving of multiple projects to achieve the data represented
+    // by the following tree via ProjectRepository
 
     @Test
     public void testCountAll() {
