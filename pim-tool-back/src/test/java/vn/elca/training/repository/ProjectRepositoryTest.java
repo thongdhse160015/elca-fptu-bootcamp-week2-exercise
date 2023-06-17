@@ -1,6 +1,7 @@
 package vn.elca.training.repository;
 
 import com.querydsl.jpa.impl.JPAQuery;
+import org.hibernate.Hibernate;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,9 +13,12 @@ import vn.elca.training.model.entity.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @ContextConfiguration(classes = {ApplicationWebConfig.class})
 @RunWith(value = SpringRunner.class)
@@ -31,6 +35,7 @@ public class ProjectRepositoryTest {
     //Test verify the saving of one project via projectRepository
 
     @Test
+    @Transactional
     public void testSaveMultipleProjectsRepresentedByRequirementTree() {
         //Group Leader users
         User glQMV = new User("QMV", Role.GL);
@@ -154,8 +159,23 @@ public class ProjectRepositoryTest {
         groupRepository.save(groupHNH);
         long numberOfAddedGroups = 2;
         Assert.assertEquals(currentGroup + numberOfAddedGroups, groupRepository.count());
-    }
 
+        Logger logger = Logger.getLogger(this.getClass().getName());
+        groupRepository.findAll().forEach(groupLeader -> {
+            logger.log(Level.INFO, groupLeader.getGroupLeader().getUsername()
+                    + "(Group Leader)");
+            Hibernate.initialize(groupLeader.getProjects());
+            groupLeader.getProjects().forEach(project -> {
+                logger.log(Level.INFO, project.getName()
+                        + " (PL:" + project.getProjectLeader().getUsername() + ")");
+                Hibernate.initialize(project.getUsers());
+                project.getUsers().forEach(user -> {
+                    logger.log(Level.INFO, user.getUsername() + "(" + user.getRole() + ")");
+                });
+            });
+        });
+
+    }
 
     @Test
     public void testSaveOneProject() {
