@@ -19,20 +19,16 @@ import java.util.Set;
 @ContextConfiguration(classes = {ApplicationWebConfig.class})
 @RunWith(value = SpringRunner.class)
 public class ProjectRepositoryTest {
-    @PersistenceContext
-    private EntityManager em;
     @Autowired
     GroupRepository groupRepository;
+    @PersistenceContext
+    private EntityManager em;
     @Autowired
     private ProjectRepository projectRepository;
     @Autowired
     private UserRepository userRepository;
 
     //Test verify the saving of one project via projectRepository
-
-
-    //TODO : To verify the saving of multiple projects to achieve the data represented
-    // by the following tree via ProjectRepository
 
     @Test
     public void testSaveMultipleProjectsRepresentedByRequirementTree() {
@@ -168,6 +164,7 @@ public class ProjectRepositoryTest {
         Project project = projectRepository.findByName(PROJECT_NAME);
         Assert.assertEquals(PROJECT_NAME, project.getName());
     }
+
     @Test
     public void testCountAll() {
         int currentCount = (int) projectRepository.count();
