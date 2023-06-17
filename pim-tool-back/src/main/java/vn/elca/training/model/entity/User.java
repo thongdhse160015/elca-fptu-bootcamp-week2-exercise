@@ -1,20 +1,15 @@
 package vn.elca.training.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.Hibernate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author gtn
- *
  */
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -23,7 +18,7 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = false, nullable = false)
     private String username;
 
     @Column
@@ -32,7 +27,17 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Task> tasks;
 
-    public User() {}
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
+
+    public User() {
+    }
+
+    public User(String username, Role role) {
+        this.username = username;
+        this.role = role;
+    }
 
     public Long getId() {
         return id;
@@ -56,5 +61,18 @@ public class User implements Serializable {
 
     public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        User user = (User) o;
+        return getId() != null && Objects.equals(getId(), user.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

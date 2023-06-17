@@ -1,21 +1,25 @@
 package vn.elca.training.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.Hibernate;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
  * @author vlp
  */
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class Project implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,8 +37,13 @@ public class Project implements Serializable {
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY)
     private Set<Task> tasks = new HashSet<>();
 
-    public Project() {
-    }
+    @OneToOne(orphanRemoval = true)
+    @JoinColumn(name = "project_leader_id")
+    private User projectLeader;
+
+    @OneToMany(orphanRemoval = true)
+    @JoinColumn(name = "project_id")
+    private Set<User> users = new LinkedHashSet<>();
 
     public Project(String name, LocalDate finishingDate) {
         this.name = name;
@@ -47,43 +56,16 @@ public class Project implements Serializable {
         this.finishingDate = finishingDate;
     }
 
-    public Long getId() {
-        return id;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Project project = (Project) o;
+        return getId() != null && Objects.equals(getId(), project.getId());
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public LocalDate getFinishingDate() {
-        return finishingDate;
-    }
-
-    public void setFinishingDate(LocalDate finishingDate) {
-        this.finishingDate = finishingDate;
-    }
-
-    public String getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(String customer) {
-        this.customer = customer;
-    }
-
-    public Set<Task> getTasks() {
-        return tasks;
-    }
-
-    public void setTasks(Set<Task> tasks) {
-        this.tasks = tasks;
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }
