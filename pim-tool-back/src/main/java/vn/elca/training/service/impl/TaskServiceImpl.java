@@ -82,10 +82,21 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public List<String> listProjectNameOfRecentTasks() {
         List<String> projectNames = new ArrayList<>(FETCH_LIMIT);
-        List<Task> tasks = taskRepository.listRecentTasks(FETCH_LIMIT);
-        for (Task task : tasks) {
+//        List<Task> tasks = taskRepository.listRecentTasks(FETCH_LIMIT);
+
+//        using JPAQuery to get project name
+        List<Task> tasksUsingJPAQuery = new JPAQuery<Task>(em)
+                .from(QTask.task)
+                .join(QTask.task.project, QProject.project)
+                .fetchJoin()
+                .orderBy(QTask.task.id.desc())
+                .limit(FETCH_LIMIT)
+                .fetch();
+
+        for (Task task : tasksUsingJPAQuery) {
             projectNames.add(task.getProject().getName());
         }
+
         return projectNames;
     }
 
