@@ -37,4 +37,9 @@ public class SecondDummyProjectServiceImpl extends AbstractDummyProjectService i
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'updateProject'");
     }
+
+    @Override
+    public void createMaintenanceProject(long oldProjectId) {
+
+    }
 }

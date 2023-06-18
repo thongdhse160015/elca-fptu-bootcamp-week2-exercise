@@ -37,4 +37,9 @@ public class FirstDummyProjectServiceImpl extends AbstractDummyProjectService im
         throw new UnsupportedOperationException("Unimplemented method 'updateProject'");
     }
 
+    @Override
+    public void createMaintenanceProject(long oldProjectId) {
+
+    }
+
 }
