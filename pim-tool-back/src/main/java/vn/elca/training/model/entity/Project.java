@@ -45,6 +45,9 @@ public class Project implements Serializable {
     @JoinColumn(name = "project_id")
     private Set<User> users = new LinkedHashSet<>();
 
+    @Column
+    private boolean activated;
+
     public Project(String name, LocalDate finishingDate) {
         this.name = name;
         this.finishingDate = finishingDate;
