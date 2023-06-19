@@ -15,6 +15,9 @@
 
 package vn.elca.training.model.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDate;
 
 import javax.persistence.Column;
@@ -29,6 +32,8 @@ import javax.validation.constraints.NotNull;
  *
  */
 @Entity
+@Getter
+@Setter
 public class TaskAudit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -75,59 +80,4 @@ public class TaskAudit {
         setMessage(message);
     }
 
-    public AuditType getAuditType() {
-        return auditType;
-    }
-
-    public void setAuditType(AuditType auditType) {
-        this.auditType = auditType;
-    }
-
-    public long getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(long projectId) {
-        this.projectId = projectId;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public String getTaskName() {
-        return taskName;
-    }
-
-    public void setTaskName(String taskName) {
-        this.taskName = taskName;
-    }
-
-    public LocalDate getTaskDeadline() {
-        return taskDeadline;
-    }
-
-    public void setTaskDeadline(LocalDate deadline) {
-        this.taskDeadline = deadline;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 }
