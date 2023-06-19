@@ -15,13 +15,14 @@
 
 package vn.elca.training.service.impl;
 
-import javax.transaction.Transactional;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import vn.elca.training.repository.TaskAuditRepository;
 import vn.elca.training.model.entity.Task;
 import vn.elca.training.model.entity.TaskAudit;
@@ -31,12 +32,11 @@ import vn.elca.training.service.AuditService;
 
 /**
  * @author vlp
- *
  */
 @Service
-@Transactional
+@Transactional(propagation = Propagation.REQUIRES_NEW)
 public class AuditServiceImpl implements AuditService {
-    private Log logger = LogFactory.getLog(getClass());
+    private final Log logger = LogFactory.getLog(getClass());
 
     @Autowired
     private TaskAuditRepository taskAuditRepository;
