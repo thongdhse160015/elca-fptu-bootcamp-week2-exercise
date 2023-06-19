@@ -48,7 +48,10 @@ import java.util.UUID;
  * @author vlp
  */
 @Service
-@Transactional
+//By default, @Transaction is roll-backed only for RuntimeException or Error.
+//DeadlineAfterFinishingDateException is a checked exception, so we need to rollback it manually.
+//Or config @Transactional(rollbackFor = {Exception})
+@Transactional(rollbackFor = {DeadlineAfterFinishingDateException.class, RuntimeException.class, Error.class})
 public class TaskServiceImpl implements TaskService {
     private static final int FETCH_LIMIT = 10;
     private final Log logger = LogFactory.getLog(getClass());
@@ -83,8 +86,7 @@ public class TaskServiceImpl implements TaskService {
     public List<String> listProjectNameOfRecentTasks() {
         List<String> projectNames = new ArrayList<>(FETCH_LIMIT);
 //        List<Task> tasks = taskRepository.listRecentTasks(FETCH_LIMIT);
-
-//        using JPAQuery to get project name
+//        using JPAQuery to get project name with fetch join
         List<Task> tasksUsingJPAQuery = new JPAQuery<Task>(em)
                 .from(QTask.task)
                 .join(QTask.task.project, QProject.project)
@@ -102,13 +104,15 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<Task> listTasksById(List<Long> ids) {
-//        List<Task> tasks = new ArrayList<>(ids.size());
+        //List<Task> tasks = new ArrayList<>(ids.size());
+
         //get task by id that is in list ids
         return new JPAQuery<Task>(em)
                 .from(QTask.task)
                 .where(QTask.task.id.in(ids))
                 .fetch();
-
+        //or we can use JpaRepository instead
+        //return taskRepository.findAllById(ids);
     }
 
     @Override
