@@ -102,17 +102,19 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<Task> listTasksById(List<Long> ids) {
-        List<Task> tasks = new ArrayList<>(ids.size());
-        for (Long id : ids) {
-            tasks.add(getTaskById(id));
-        }
-        return tasks;
+//        List<Task> tasks = new ArrayList<>(ids.size());
+        //get task by id that is in list ids
+        return new JPAQuery<Task>(em)
+                .from(QTask.task)
+                .where(QTask.task.id.in(ids))
+                .fetch();
+
     }
 
     @Override
     public Task getTaskById(Long id) {
-        return taskRepository.findById(id).orElse(null);
         // Should throw exception if not found
+        return taskRepository.findById(id).orElse(null);
     }
 
     @Override
