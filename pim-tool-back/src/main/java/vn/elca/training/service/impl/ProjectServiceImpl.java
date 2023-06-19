@@ -3,6 +3,7 @@ package vn.elca.training.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import vn.elca.training.model.entity.Project;
 import vn.elca.training.repository.ProjectRepository;
@@ -42,7 +43,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void createMaintenanceProject(long oldProjectId) {
         // Retrieve the old project from the repository
         Project oldProject = projectRepository.findById(oldProjectId)
@@ -64,6 +65,6 @@ public class ProjectServiceImpl implements ProjectService {
         projectRepository.save(oldProject);
 
         // Simulate an exception to test rollback behavior (optional)
-        // throw new RuntimeException("Simulated exception");
+         throw new RuntimeException("Simulated exception");
     }
 }
